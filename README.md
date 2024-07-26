@@ -2,8 +2,6 @@
 
 <h1 align="center">Enable Log Collection for Virtual Machines and NSGs</h1>
 
-<br>
-
 <p align="center">
 <img width="1000" src="https://github.com/user-attachments/assets/280173e7-0286-41a9-b5bb-143a93366dfe" alt="Banner"/>
 <br />
