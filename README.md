@@ -2,24 +2,24 @@
 
 <h1 align="center">Enable Log Collection for Virtual Machines and NSGs</h1>
 
+<br>
+
 <p align="center">
 <img width="1000" src="https://github.com/user-attachments/assets/280173e7-0286-41a9-b5bb-143a93366dfe" alt="Banner"/>
 <br />
 
 <br />
 
-In this lab we're going to Enable Microsoft Defender for Cloud.
+In this lab we're going to finish the configuration to allow our Logs from the Virtual Machines to be sent into our Log Analytics Workspace., along with the actual Network Security groups.
 
-Microsoft Defender for Cloud gives us a highlevel view of our Azure Environment in terms of Security and Secure Score.
+After we make the necessary configurations, we'll Query our LAW for the Linux Logs, the Windows Logs as well as the NSG Logs.
 
-It also allows us to take Logs from Virtual Machines and NSGs and ingest them into our Log Analytics Workspace.
-
-So that's what we will be doing in this lab ➜ Set Up Microsoft Defender for Cloud.
+This way we'll make sure that all of our Logs are coming into our Central Repository.
 
 <br />
 
 <details close> 
-<summary> <h2> 1️⃣ Enable Microsoft Defender for Cloud for Log Analytics Workspace</h2> </summary>
+<summary> <h2> 1️⃣ Create an Azure Storage Account</h2> </summary>
 <br>
 
 > First thing we're going to do is Enable Defender for Cloud for our Log Analytics Workspace.
