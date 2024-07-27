@@ -90,7 +90,7 @@ Click on the **"NSG flow logs"** blade ➜ and then the **"Create flow log"** bu
 
 We can actually create the Flow Log Settings for both of the NSGs' Flow Logs at the same time.
 
-To do so, we'll click on ➕ **Select resource** ➜ and after we'll select ☑️ both the **windows-vm-ng** and the **linux-vm-nsg**:
+To do so, we'll click on ➕ **Select resource** ➜ and after we'll select ☑️ both the **windows-vm-nsg** and the **linux-vm-nsg**:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
