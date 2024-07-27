@@ -22,125 +22,150 @@ This way we'll make sure that all of our Logs are coming into our Central Reposi
 <summary> <h2> 1️⃣ Create an Azure Storage Account</h2> </summary>
 <br>
 
-> First thing we're going to do is Enable Defender for Cloud for our Log Analytics Workspace.
+>   <details close> 
+>   
+> **<summary> 📝 Explanation</summary>**
 > 
-> This will allow us to forward Logs from the Virtual Machines into the LAW.
+> The first thing we're going to do is Create an Azure Storage Account.
+> 
+> You can think about this as an ***Enterprise Dropbox or Google Drive*** ➜ it's just a place where you can store files.
+>
+> It does offer a lot more functionallity and features than just a normal "Consumer Dropbox".
+>
+> Azure requires this Storage Account to be set up for our NSG Flow Logs to be recorded.
+>
+> A Network Security Group is essentially a Firewall that "seats" in front of the Virtual Machine.
+>
+> And we can create what's called a **"Flow Log"** which will keep track of all of the traffic coming in and going out through this "Firewall".
+>
+> It can Log Mallicious Traffic and different traffic types.
+>
+> And so we need to Create the Storage Account where those Logs will be stored in an intermediary basis ➜ it's just something required by Azure.
+>
+>   </details>
 
 <br>
 
-Got to the **Azure Portal** ➜ search for **"Defender for Cloud***:
+We will go to our **Azure Portal** ➜ search for **Storage Account** ➜ and click **"Create storage account"**
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Then we'll click on **"Environment settings"**:
+You can set it up with this details (or similar if applicable):
+- **Resource group**: ```RG-Cyber-Lab```
+- **Storage account name**: ```sacyberlab999``` ➜ it has to be globally unique
+- **Region**: ```East US 2``` ➜ ⚠️ make sure you put it in the **Same Region as you VMs**, otherwise it won't work!
+- Leave everything else as it is
 
-![azure portal](https://github.com/user-attachments/assets/041b5689-7033-40f6-97be-e4d955a2bf22)
+Click **"Create"**:
 
-Expand the ```∨``` next to **"Azure subscription 1"**
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-All the way on the right side for the **"LAW--Cyber-Lab-01"** line ➜ click on ```...``` ➜ and then **"Edit settings"**:
-
-![azure portal](https://github.com/user-attachments/assets/1a969a7f-8ae6-4536-849e-6e190365d2ba)
-
-First we'll go to the **"Defender plans"** tab.
-
-We'll **Turn On** MDC for **"Servers"** and also for **"SQL servers on machines"** ➜ since we do have a SQL Server instance.
+💡 Again, this will be used to store what's called the **"NSG Flow Logs"** ➜ there're essentially Logs from the Firewalls.
 
 <br>
-
->   <details close> 
->   
-> **<summary> 💡 </summary>**
-> 
-> This will allow us to **Collect Logs** from these resources.
-> 
->   </details>
-
-<br>
-
-Make sure you click the 💾 **Save** button:
-
-![azure portal](https://github.com/user-attachments/assets/ec89cb13-f9b6-4c74-8d13-52ca62d433f0)
-
-Then we'll go to the **"Data collection"** tab ➜ and check **"All Events"**
-
-<br>
-
->   <details close> 
->   
-> **<summary> 💡 </summary>**
-> 
-> This will allow us to **Collect All Events from the Windows Security Log**.
-> 
-> Which is like the **Windows Event Viewer**, where we can see people attempting to **Log Into our Windows Machines over the Internet**.
-> 
-> We're going to be able to **Collect Logs** from that and then **Forward Them to this Log Analytics Workspace**.
-> 
->   </details>
-
-<br>
-
-Again ➜ click the 💾 **Save** button:
-
-![azure portal](https://github.com/user-attachments/assets/f6391fa7-b49e-4a7e-a91d-f8da0de362d4)
 
   </details>
 
 <h2></h2>
 
 <details close> 
-<summary> <h2>2️⃣ Enable Microsoft Defender for Cloud for the Subscription</h2> </summary>
+<summary> <h2>2️⃣ Enable Flow Logs for both Network Security Groups</h2> </summary>
 <br>
 
-Go back to **MDC** ➜ **"Environment settings"** blade.
+> If you remember we have 2 NSGs ➜ 1 on the Windows Vm & 1 on the Linux VM.
+> 
+> So now we'll Enable Flow Logs for both of them.
 
-This time for the **"Azure subsription 1"** line ➜ click on ```...``` ➜ and then **"Edit settings"**:
+<br>
 
-![azure portal](https://github.com/user-attachments/assets/948dd0ed-985f-44ae-bf88-d5dce29a8a42)
+We'll just go to **"Network security groups"** in the **Azure Portal**.
 
-Now we'll **Turn On** MDC for **"Servers"**, **"Databases"**, **"Storage"** & **"Key Vault"**.
+And then we'll first click on the **"windows-vm-nsg"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click on the **"NSG flow logs"** blade ➜ and then the **"Create flow log"** button:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+We can actually create the Flow Log Settings for both of the NSGs' Flow Logs at the same time.
+
+To do so, we'll click on ➕ **Select resource** ➜ and after we'll select ☑️ both the **windows-vm-ng** and the **linux-vm-nsg**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+- We'll select the Storage Acount ```sacyberlab999``` we just created
+
+- And we'll set the Retention to **"0 days"** ➜ meaning the data will be retained indefinitely:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+For the **Analytics** tab:
+- **Flow Logs Version**: ```⦿ Version 2```
+- Check ☑️ **Enable Traffic Analytics**
+  
+  - **Traffic Analytics processing interval**: ```Every 10 mins```
+  - **Log Analytics Workspace**: ```LAW-Cyber-Lab-01``` ➜ ⚠️ make sure to the Flows Logs are going to your own LAW!
+
+<br>
 
 >   <details close> 
 >   
-> **<summary> 💡 </summary>**
+> **<summary> 💡 Traffic Analytics</summary>**
 > 
-> We'll create a **Storage Account** and **Key Vault** instances in a subsequent lab.
+> This is where **Microsoft Defender for Cloud** will **Analyse the Traffic** and it will determine which traffic is **Malicious** and which one is **Benign**.
 > 
+> MDC has different categorizations for the traffic ➜ and so we'll use Traffic Analysis later to plot on a **World Map**.
+>  
 >   </details>
 
-Then click on **"Settings >"** under **"Monitoring coverage"** for the **Servers**:
+<br>
 
-![azure portal](https://github.com/user-attachments/assets/981ad39b-3c2c-487d-8972-5eef50ad7289)
+Then you can click **"Review + create"** to create our Flow Logs:
 
-We'll now click on **"Edit configuration"** for the **Log Analytics agent**.
-
-And for the **Workspace** ➜ pick our actual ```LAW-Cyber-Lab-01``` workspace
-
->   <details close> 
->   
-> **<summary> 💡 </summary>**
-> 
-> We don't want it to automatically create a new LAW ➜ we want to use the one we created.
-> 
-> We're basically onboarding our Virtual Machines to our LAW and then forward the Logs to it
-> 
->   </details>
-
-Make sure you click **"Apply"** and then 💾 **Continue**:
-
-![azure portal](https://github.com/user-attachments/assets/c721c91e-0cb0-4ac9-bc16-cf1dc562007c)
-
-After that we'll click on the 💾 **Save** button to save the **Defender plans for the Subscription**:
-
-![azure portal](https://github.com/user-attachments/assets/cf432e44-419e-4bc9-88fd-e0bfe5bd11f9)
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
   </details>
 
 <h2></h2>
 
 <details close> 
-<summary> <h2>3️⃣ Enable Microsoft Defender for Cloud Continuous Export in Environment Settings</h2> </summary>
+<summary> <h2>3️⃣ Configure Data Collection Rules within our Log Analytics Workspace</h2> </summary>
 <br>
+
+> The next thing we're going to do is Configure Data Collection Rules for our Virtual Machines.
+> 
+> Basically what these are
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+
+
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+
+
+
+
 
 Still inside the **"Edit settings"** for the Subscription ➜ we'll go to the **"Continous export"** blade now.
 
