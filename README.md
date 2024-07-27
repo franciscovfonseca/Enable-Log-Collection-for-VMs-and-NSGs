@@ -133,22 +133,39 @@ Then you can click **"Review + create"** to create our Flow Logs:
 <summary> <h2>3️⃣ Configure Data Collection Rules within our Log Analytics Workspace</h2> </summary>
 <br>
 
+>   <details close> 
+>   
+> **<summary> 📝 Explanation</summary>**
+> 
 > The next thing we're going to do is Configure Data Collection Rules for our Virtual Machines.
 > 
-> Basically what these are
+> The Data Collection Rules will work in conjunction with Defender for Cloud and the Agents that get installed on the VMs.
+>
+> They work to specify which Logs from the VMs to forward to the Log Analytics Workspace.
 > 
+> If you remember ➜ in the Windows VM there were the System Logs, the Security Logs, the Application Logs, and a whole bunch of other Logs.
 > 
+> The Data Collection Rules allow us to define which ones of those Logs get forwarded to the LAW.
 > 
-> 
-> 
-> 
-> 
-
-
-
-
+> We don't want to forward everything ➜ because it will end up costing more than it should.
+>
+>   </details>
 
 <br>
+
+To configure Data collection Rules (DCR) we can go to our Log Analytics Workspace ```LAW-Cyber-Lab-01```
+
+We'll click on the **"Agents"** blade ➜ and the on the **"Data Collection Rules"** Button:
+
+
+
+
+
+
+
+
+
+
 
 <br>
 
