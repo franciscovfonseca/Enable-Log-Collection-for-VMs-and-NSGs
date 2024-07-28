@@ -261,7 +261,7 @@ We can now **"Review + create"** to Create the Data Collection Rule:
 
 >   <details close> 
 >   
-> **<summary> 💡 </summary>**
+> **<summary> 💡 Summary</summary>**
 >   
 > Next we're going to add a Special Data Sources to our Data Collection Rule.
 >   
@@ -271,7 +271,9 @@ We can now **"Review + create"** to Create the Data Collection Rule:
 > 
 >   </details>
 
-We'll go back to our Log Analytics Wokspace ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
+<br>
+
+We'll go back to our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
@@ -285,9 +287,11 @@ Then we'll go to the **"Data Sources"** blade ➜ and click on the **"Windows Ev
 
 This time instead of **"Basic"** we'll go to **"Custom"**.
 
+<br>
+
 >   <details close> 
 >   
-> **<summary> 💡 Explanation</summary>**
+> **<summary> 📝 Explanation</summary>**
 >   
 > We can see in the image below the XPath queries that we previously selected ➜ under **Event Logs**.
 >   
@@ -296,6 +300,8 @@ This time instead of **"Basic"** we'll go to **"Custom"**.
 > So in order for us to Collect Logs from the Firewall, as well as the actual Defender Anti-Malware on the Virtual Machines ➜ we have to use this XPath syntax convention to specify which Logs to capture.
 > 
 >   </details>
+
+<br>
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
@@ -336,28 +342,161 @@ Click **"Save"** and we've successfully configured our Data Collection Rule with
 <h2></h2>
 
 <details close> 
-<summary> <h2>5️⃣ Manually install the Log Analytics Agent on both the Windows VM & the Linux VM</h2> </summary>
+<summary> <h2>5️⃣ Manually Install the Log Analytics Agent on the Windows VM</h2> </summary>
 <br>
 
 >   <details close> 
 >   
-> **<summary> 💡 </summary>**
+> **<summary> 💡 Summary</summary>**
 >   
+> Defender for Cloud in Azure should automatically install the necessary agent on both Virtual Machines to allow the Logs to be forwarded.
 > 
+> Basically the agent will work in conjunction with the Data Collection rules to pick which Logs to forward, and then it will ultimately forward them into the Log analytics Workspace.
 > 
+> But we can manually install the Agent on the Virtual Machines just to make sure it is indeed there and it is forwarding the Logs as it should.
 > 
-> 
-
-
-
-  
-> Next we're going to add a Special Data Sources to our Data Collection Rule.
->   
-> It will Log whenever somebody messes with the Windows Firewall ➜ like if they Turn Off the Firewall
-> 
-> And also when Malware is discovered in the Virtual Machines ➜ it will create and pull those Logs out as well.
+> So we're just going to do that in this section of the lab.
 > 
 >   </details>
+
+<br>
+
+Back to our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade
+
+We're first going to Install the Agent on the ```windows-vm``` ➜ so under the **"`Windows servers"** tab ➜ expand the **"Log Analytics agent instructions"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+>   <details close> 
+>   
+> **<summary> 📝 Explanation</summary>**
+>   
+> Basically we're going to log into our Windows Vm and then install the ***Windows Agent (64 bit)***.
+> 
+> We'll then use the **Workspace ID** & **Primary Key** to force the Agent to point back to our Log Analytics Workspace and Forward the Logs to it.
+> 
+>   </details>
+
+<br>
+
+So let's Connect to the **Windows Vm** ➜ open **Microsoft Remote Desktop** ➜ and then connect with the VM's Public IP Address (which we've done many times before in previous labs):
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Use your credentials:
+- **Username**: ```labuser```
+- **Password**: ```Cyberlab123!```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Once connected to the Windows Vm ➜ go back to the Azure Portal on your Computer and copy the "Download link" to **Install the Agent on the Windows VM**.
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Now in the Windows Vm ➜ open up **"Edge"** ➜ Paste the Link & Download the Agent:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+You can Open the File ➜ and click **"Next"** until you reach the section where you want to select:
+
+```☑️ Connect the agent to Azure Log Analytics (OMS)```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+In the next section ➜ Paste the **Workspace ID** & **Workspace Key** you Copied from the Azure Portal back in your Computer:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+⚠️ Make sure **"Azure Cloud"** is set to ```Azure Commercial```
+
+Click **"Next and then **"Install"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Once the Agent has finished Installing ➜ still inside the **Windows VM** ➜ open **Control Panel**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click on **"Large Icons"** ➜ and then **"Microsoft Monitoring Agent"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Then if we go to the **"Azure Log Analytics (OMS)"** tab ➜ and we should see:
+
+- The Workspace ID we pasted earlier
+
+- The status: ```✅ The Microsoft Monitoring Agent has successfully connected to the Microsoft Operations Management Suite service.```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+This signifies that the Connection is Successfull and so it should be Forwarding Logs into our LAW.
+
+✅ So we're done with this Windows VM portion.
+
+<br>
+
+  </details>
+
+<h2></h2>
+
+<details close> 
+<summary> <h2>6️⃣ Manually Install the Log Analytics Agent on the Linux VM</h2> </summary>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>   <details close> 
+>   
+> **<summary> 💡 Summary</summary>**
+>   
+> Defender for Cloud in Azure should automatically install the necessary agent on both Virtual Machines to allow the Logs to be forwarded.
+> 
+> Basically the agent will work in conjunction with the Data Collection rules to pick which Logs to forward, and then it will ultimately forward them into the Log analytics Workspace.
+> 
+> But we can manually install the Agent on the Virtual Machines just to make sure it is indeed there and it is forwarding the Logs as it should.
+> 
+> So we're just going to do that in this section of the lab.
+> 
+>   </details>
+
+
+
+
+
+
+
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
 
 We'll go back to our Log Analytics Wokspace ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
 
