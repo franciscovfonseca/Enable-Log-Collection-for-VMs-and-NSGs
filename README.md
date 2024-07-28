@@ -251,7 +251,177 @@ We can now **"Review + create"** to Create the Data Collection Rule:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
+  </details>
 
+<h2></h2>
+
+<details close> 
+<summary> <h2>4️⃣ Configure Special Windows Event Data Collection (Defender and Windows Firewall)</h2> </summary>
+<br>
+
+>   <details close> 
+>   
+> **<summary> 💡 </summary>**
+>   
+> Next we're going to add a Special Data Sources to our Data Collection Rule.
+>   
+> It will Log whenever somebody messes with the Windows Firewall ➜ like if they Turn Off the Firewall
+> 
+> And also when Malware is discovered in the Virtual Machines ➜ it will create and pull those Logs out as well.
+> 
+>   </details>
+
+We'll go back to our Log Analytics Wokspace ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click on the Data Collection Rule that we just created ➜ ```dcr-all-vms```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Then we'll go to the **"Data Sources"** blade ➜ and click on the **"Windows Event Logs"** Data Source:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+This time instead of **"Basic"** we'll go to **"Custom"**.
+
+>   <details close> 
+>   
+> **<summary> 💡 Explanation</summary>**
+>   
+> We can see in the image below the XPath queries that we previously selected ➜ under **Event Logs**.
+>   
+> Think of an XPath query as Microsoft's "convention" for specifying which Logs (Application & Security in this case) and which "Sub-Logs" inside of those two we want to capture.
+> 
+> So in order for us to Collect Logs from the Firewall, as well as the actual Defender Anti-Malware on the Virtual Machines ➜ we have to use this XPath syntax convention to specify which Logs to capture.
+> 
+>   </details>
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+We want to configure our **Data Collection Rule** so that:
+
+1. If Malware is discovered ➜ a Log is created and it's forwarded into our Log Analytics Workspace:
+
+Copy the following **Windows Defender Malware Detection XPath Query**.
+
+```commandline
+Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116 or EventID=1117)]]
+```
+<br>
+
+And now add it to the **Add Data Source Section**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+2. Also if the Firewall is disabled or messed with ➜ we want the Firewall Logs to be forwarded to our Log Analytics Workspace as well:
+
+Copy the following **Windows Firewall Tampering Detection XPath Query**.
+
+```commandline
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*[System[(EventID=2003)]]
+```
+<br>
+
+Again, we'll add it to the **Add Data Source Section**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click **"Save"** and we've successfully configured our Data Collection Rule with "Special Forwarding" ✅
+
+<br>
+
+  </details>
+
+<h2></h2>
+
+<details close> 
+<summary> <h2>5️⃣ Manually install the Log Analytics Agent on both the Windows VM & the Linux VM</h2> </summary>
+<br>
+
+>   <details close> 
+>   
+> **<summary> 💡 </summary>**
+>   
+> 
+> 
+> 
+> 
+
+
+
+  
+> Next we're going to add a Special Data Sources to our Data Collection Rule.
+>   
+> It will Log whenever somebody messes with the Windows Firewall ➜ like if they Turn Off the Firewall
+> 
+> And also when Malware is discovered in the Virtual Machines ➜ it will create and pull those Logs out as well.
+> 
+>   </details>
+
+We'll go back to our Log Analytics Wokspace ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click on the Data Collection Rule that we just created ➜ ```dcr-all-vms```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Then we'll go to the **"Data Sources"** blade ➜ and click on the **"Windows Event Logs"** Data Source:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+This time instead of **"Basic"** we'll go to **"Custom"**.
+
+>   <details close> 
+>   
+> **<summary> 💡 Explanation</summary>**
+>   
+> We can see in the image below the XPath queries that we previously selected ➜ under **Event Logs**.
+>   
+> Think of an XPath query as Microsoft's "convention" for specifying which Logs (Application & Security in this case) and which "Sub-Logs" inside of those two we want to capture.
+> 
+> So in order for us to Collect Logs from the Firewall, as well as the actual Defender Anti-Malware on the Virtual Machines ➜ we have to use this XPath syntax convention to specify which Logs to capture.
+> 
+>   </details>
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+We want to configure our **Data Collection Rule** so that:
+
+1. If Malware is discovered ➜ a Log is created and it's forwarded into our Log Analytics Workspace:
+
+Copy the following **Windows Defender Malware Detection XPath Query**.
+
+```commandline
+Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116 or EventID=1117)]]
+```
+<br>
+
+And now add it to the **Add Data Source Section**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+2. Also if the Firewall is disabled or messed with ➜ we want the Firewall Logs to be forwarded to our Log Analytics Workspace as well:
+
+Copy the following **Windows Firewall Tampering Detection XPath Query**.
+
+```commandline
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*[System[(EventID=2003)]]
+```
+<br>
+
+Again, we'll add it to the **Add Data Source Section**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click **"Save"** and we've successfully configured our Data Collection Rule with "Special Forwarding" ✅
+
+<br>
+
+  </details>
+
+<h2></h2>
 
 
 <br>
