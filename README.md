@@ -153,16 +153,103 @@ Then you can click **"Review + create"** to create our Flow Logs:
 
 <br>
 
-To configure Data collection Rules (DCR) we can go to our Log Analytics Workspace ```LAW-Cyber-Lab-01```
+To **Configure Data Collection Rules (DCR)** we can go to our Log Analytics Workspace ```LAW-Cyber-Lab-01```
 
 We'll click on the **"Agents"** blade ➜ and the on the **"Data Collection Rules"** Button:
 
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
+Then click on ➕ **Create** to create a new DCR:
 
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
+We'll create it with the following details:
+- **Rule Name**: ```dcr-all-vms``` ➜ 💡 this stands for 1 single DCR that will apply to all of our VMs
+- **Resource group**: ```RG-Cyber-Lab```
+- **Region**: ```East US 2``` ➜ ⚠️ again, make sure you put it in the **Same Region as you VMs**, otherwise it won't work!
+- **Platform Type**: ⦿ **All**
 
+Then click "Next" to reach the **Resources** tab:
 
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
+For the Resources we're going to ➕ **Add Resources**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Now expand the **> RG-Cyber Lab** Resource Group ➜ and select ☑️ for both of our VMs ➜ click **"Apply"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Click **"Next: Collect and deliver >"**
+
+💡 This is where we'll specify which Logs from within the VMs we're going to collect.
+
+So we'll click on the ➕ **Add data source** button:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+We'll do the **"Linux Syslog"** first.
+
+In this Lab, the only Logs we're going to Collect from the Linux VM are the ```LOG_AUTH``` Logs.
+
+>   <details close> 
+>   
+> **<summary> 💡 </summary>**
+>   
+> The AUTH LOGS are the Logs we inspected earlier ➜ where we saw all the **SSH Failure Attempts**.
+> 
+> For the data source settings, when selecting the **"Minimum log level"** ➜ this signifies the level of logging we want to collect:
+> 
+> DEBUG essentially means "collect everything", and then in kind of scales down towards EMERG which means "only collect critical logs".
+> 
+>   </details>
+
+So for **LOG_AUTH** ➜ leave the **"Minimum log level"** at ```LOG_DEBUG``` ➜ meaning we'll collect all the Auth Logs.
+
+And then we'll select ```LOG_DEBUG``` for the rest of the Log Types.
+
+After setting that up, click on the **"Next : Destination"** button:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+For **Destination** ➜ make sure you're sending the data to your actual **LAW**, not the random one that was created! ⚠️
+
+Click **"Add data source"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Now click on the ➕ **Add data source** button again:
+
+The next one is going to be **"Windows Event Logs"**.
+
+>   <details close> 
+>   
+> **<summary> 💡 </summary>**
+>   
+> This might be hard to remember, but back when we were configuring SQL logging for the SQL Server Database ➜  the SQL Logs appeared on the Application Event Log ➜ under Information
+> 
+> And then for Security ➜  Audit Success & Audit Failure ➜  this is when someone tries to Remote Desktop into our Windows VM or tries to Map a File Share.
+> 
+>   </details>
+
+We're going to select the ☑️ **Information** Logs from **"Application"** type.
+
+And also select the ☑️ **Audit Success** & ☑️ **Audit Failure** Logs from the **"Security"** type.
+
+This is all we need for the Windows Event Logs, so then we'll click on **"Next : Destination"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Again ➜ for **Destination** ➜ we need to make sure we put our actual LAW ```LAW-Cyber-Lab-01```.
+
+Then Add the data source:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+We can now **"Review + create"** to Create the Data Collection Rule:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
 
 
