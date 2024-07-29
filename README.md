@@ -443,118 +443,76 @@ This signifies that the Connection is Successfull and so it should be Forwarding
 <summary> <h2>6️⃣ Manually Install the Log Analytics Agent on the Linux VM</h2> </summary>
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->   <details close> 
->   
-> **<summary> 💡 Summary</summary>**
->   
-> Defender for Cloud in Azure should automatically install the necessary agent on both Virtual Machines to allow the Logs to be forwarded.
+> The Next thing we're going to do is do same thing as previously, but this time for the Linux Virtual Machine.
 > 
-> Basically the agent will work in conjunction with the Data Collection rules to pick which Logs to forward, and then it will ultimately forward them into the Log analytics Workspace.
-> 
-> But we can manually install the Agent on the Virtual Machines just to make sure it is indeed there and it is forwarding the Logs as it should.
-> 
-> So we're just going to do that in this section of the lab.
-> 
->   </details>
-
-
-
-
-
-
-
-
+> Basically in order to Install the Agent on the Linux ➜ we need to SSH into our Linux VM and Paste a command in there.
 
 <br>
 
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-
-We'll go back to our Log Analytics Wokspace ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
+To do that we're going to click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Click on the Data Collection Rule that we just created ➜ ```dcr-all-vms```
+Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its **Public IP Address**:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Then we'll go to the **"Data Sources"** blade ➜ and click on the **"Windows Event Logs"** Data Source:
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+- Then if you're on Windows ➜ open Powershell
+
+- But if you're on Mac ➜ open Terminal
+
+And now we'll **SSH into our Linux VM** ➜ so type ```ssh USERNAME@LINUX-VM IP ADDRESS```
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-This time instead of **"Basic"** we'll go to **"Custom"**.
-
->   <details close> 
->   
-> **<summary> 💡 Explanation</summary>**
->   
-> We can see in the image below the XPath queries that we previously selected ➜ under **Event Logs**.
->   
-> Think of an XPath query as Microsoft's "convention" for specifying which Logs (Application & Security in this case) and which "Sub-Logs" inside of those two we want to capture.
-> 
-> So in order for us to Collect Logs from the Firewall, as well as the actual Defender Anti-Malware on the Virtual Machines ➜ we have to use this XPath syntax convention to specify which Logs to capture.
-> 
->   </details>
+It'll ask for the **Password** so just type it in (```Cyberlab123!```):
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-We want to configure our **Data Collection Rule** so that:
+You'll know you're logged in when your prompt changes to something like this ```labuser@linux-vm```:
 
-1. If Malware is discovered ➜ a Log is created and it's forwarded into our Log Analytics Workspace:
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Copy the following **Windows Defender Malware Detection XPath Query**.
-
-```commandline
-Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116 or EventID=1117)]]
-```
 <br>
 
-And now add it to the **Add Data Source Section**:
+<h2></h2>
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-2. Also if the Firewall is disabled or messed with ➜ we want the Firewall Logs to be forwarded to our Log Analytics Workspace as well:
-
-Copy the following **Windows Firewall Tampering Detection XPath Query**.
-
-```commandline
-Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*[System[(EventID=2003)]]
-```
 <br>
 
-Again, we'll add it to the **Add Data Source Section**:
+Now to Install the Log Analytics Agent on the Linux VM  ➜ we'll go back to the **"Agents"** blade in our **LAW**
+
+Copy the Command Line under ***"Download and onboard agent for Linux"***:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Click **"Save"** and we've successfully configured our Data Collection Rule with "Special Forwarding" ✅
+Go back to the **Terminal App** ➜ **Paste the Command** ➜ and **Run It** (Press Enter):
+
+This will:
+- Download the Script-
+- Execute the Script-
+- Pass the Parameters which is our
+  - Log Analytics Workspace ID
+  - as well as our Primary Key
+- And then it'll also define the Endpoint that Ingests the Logs.
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+It should now install the **Log Analytics Agent** locally with a ```status code 0``` at the end:
+
+We can then just ```exit``` the SSH connection to our **Linux VM**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Now we'll go back to the **Azure Portal** ➜ inside of our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade again.
+
+On the VM's tabs we can check that both the **Log Analytics Agents were Successfully Installed** ✔️
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+
+✅ We should be able to start **Querying the Logs** directly inside of **Log Analytics Workspace**.
 
 <br>
 
@@ -562,69 +520,151 @@ Click **"Save"** and we've successfully configured our Data Collection Rule with
 
 <h2></h2>
 
+<details close> 
+<summary> <h2>7️⃣ Query the Log Analytics Workspace for our VM Logs & NSG Logs</h2> </summary>
+<br>
+
+> The next thing we're going to do, before we finish this lab up, is Query the LAW for our VM Logs as well as our NSG Logs.
+> 
+> We can't move on to the next Lab until we actually start seeing those Logs showing up in there.
 
 <br>
 
-<br>
+Back to the **Azure Portal** and to our **Log analytics Workspace** ➜ on the left we'll click on the **"Logs"** blade.
 
-<br>
+💡 This is where we can start Querying the Logs:
 
-<br>
-
-<br>
-
-
-
-
-
-
-
-
-Still inside the **"Edit settings"** for the Subscription ➜ we'll go to the **"Continous export"** blade now.
-
-Click on the **"Log Analytics workspace"** tab ➜ and make sure **"Export enabled"** is **Turned On**:
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
 >   <details close> 
 >   
-> **<summary> 💡 </summary>**
+> **<summary> 📝 Explanation</summary>**
 > 
-> Doing this will **Export Alerts into our LAW** so we can **Query Them Later**.
+> Basically this is where we can practice KQL (Kusto Query Language) ➜ it's kinf of similar to SQL (Structured Query Language).
 > 
-> So if **Defender for Cloud** discovers there's some problem with our Environment, like a **Brute-Force Attack** going on, or there's a **Poor Configuration** for example ➜ MDC will **Export those Alerts into our LAW** ➜ which will let us **Query Them Later**
+> Azure will create what's called a Table.
 > 
->   </details>
-
-![azure portal](https://github.com/user-attachments/assets/6935cd85-97d1-4b21-a86f-f2b7c691be9a)
-
-So we'll enable ☑️ **Exported data types** for all of the following options:
-
->   <details close> 
->   
-> **<summary> 💡 </summary>**
-> 
-> We haven't actually configured **"Regulatory compliance"** yet, but we'll do that in a future lab.
-> 
-> This will basically enable **NIST 800-53** for our Environment to see what controls are missing in certain areas.
+> You can think of a Table as something similar to an Excel Spreadsheet, but in this case it's like a Database to store our.Logs.
 > 
 >   </details>
 
-![azure portal](https://github.com/user-attachments/assets/c35fbae6-732e-440c-bcfa-d2ea1ddcd9d5)
+<br>
 
-For the **"Export configuration"** option let's just configure it to our **Resource group** ```RG-Cyber-Lab```
+To make sure the Logs are coming in from all 3 sources, we'll Query the different **"Tables"**.
 
-And also for the **"Export target"** we'll select our **Target Workspace** ```LAW-Cyber-Lab-01```
+1. The Table that is used to store the Linux Logs is called Syslog
 
->   <details close> 
->   
-> **<summary> 💡 </summary>**
+We should be able to type ```Syslog``` and clcik the ▶️ **"Run"** Button to Query the Syslog Log:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+✅ Looks like the **Linux VM Logs** are actually coming in ➜ so we know it's working.
+
+<br>
+
+<h2></h2>
+
+<br>
+
+
+2. The Table (aka Excel Spreadsheet) that is used to hold the Logs from our Windows VMs is called SecurityEvent
+
+
+3. 
+
+
+> Basically we're going to log into our Windows Vm and then install the ***Windows Agent (64 bit)***.
 > 
-> This is the target workspace where we want to **Export the Alerts to** ➜ so we have to select our **LAW**.
+> We'll then use the **Workspace ID** & **Primary Key** to force the Agent to point back to our Log Analytics Workspace and Forward the Logs to it.
 > 
 >   </details>
 
-We'll then click 💾 **Save**
+<br>
 
-![azure portal](https://github.com/user-attachments/assets/3ac116e8-151e-43f3-9a84-68a5216189c3)
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+
+
+
+
+To do that we're going to click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its **Public IP Address**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+- Then if you're on Windows ➜ open Powershell
+
+- But if you're on Mac ➜ open Terminal
+
+And now we'll **SSH into our Linux VM** ➜ so type ```ssh USERNAME@LINUX-VM IP ADDRESS```
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+It'll ask for the **Password** so just type it in (```Cyberlab123!```):
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+You'll know you're logged in when your prompt changes to something like this ```labuser@linux-vm```:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+<br>
+
+<h2></h2>
+
+<br>
+
+Now to Install the Log Analytics Agent on the Linux VM  ➜ we'll go back to the **"Agents"** blade in our **LAW**
+
+Copy the Command Line under ***"Download and onboard agent for Linux"***:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Go back to the **Terminal App** ➜ **Paste the Command** ➜ and **Run It** (Press Enter):
+
+This will:
+- Download the Script-
+- Execute the Script-
+- Pass the Parameters which is our
+  - Log Analytics Workspace ID
+  - as well as our Primary Key
+- And then it'll also define the Endpoint that Ingests the Logs.
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+It should now install the **Log Analytics Agent** locally with a ```status code 0``` at the end:
+
+We can then just ```exit``` the SSH connection to our **Linux VM**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+Now we'll go back to the **Azure Portal** ➜ inside of our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade again.
+
+On the VM's tabs we can check that both the **Log Analytics Agents were Successfully Installed** ✔️
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
+
+✅ We should be able to start **Querying the Logs** directly inside of **Log Analytics Workspace**.
+
+<br>
 
 <h2></h2>
 
