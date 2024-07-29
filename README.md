@@ -449,19 +449,15 @@ This signifies that the Connection is Successfull and so it should be Forwarding
 
 <br>
 
-To do that we're going to click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
 Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its **Public IP Address**:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-- Then if you're on Windows ➜ open Powershell
+- Then if you're on **Windows** ➜ open **Powershell**
 
-- But if you're on Mac ➜ open Terminal
+- But if you're on **Mac**➜ open **Terminal**
 
 And now we'll **SSH into our Linux VM** ➜ so type ```ssh USERNAME@LINUX-VM IP ADDRESS```
 
@@ -471,7 +467,7 @@ It'll ask for the **Password** so just type it in (```Cyberlab123!```):
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-You'll know you're logged in when your prompt changes to something like this ```labuser@linux-vm```:
+You'll know you're **logged in** when your prompt changes to something like this ```labuser@linux-vm```:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
@@ -483,6 +479,10 @@ You'll know you're logged in when your prompt changes to something like this ```
 
 Now to Install the Log Analytics Agent on the Linux VM  ➜ we'll go back to the **"Agents"** blade in our **LAW**
 
+Click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
+
+![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+
 Copy the Command Line under ***"Download and onboard agent for Linux"***:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
@@ -490,11 +490,9 @@ Copy the Command Line under ***"Download and onboard agent for Linux"***:
 Go back to the **Terminal App** ➜ **Paste the Command** ➜ and **Run It** (Press Enter):
 
 This will:
-- Download the Script-
-- Execute the Script-
-- Pass the Parameters which is our
-  - Log Analytics Workspace ID
-  - as well as our Primary Key
+- Download the Script
+- Execute the Script
+- Pass the Parameters, which is our ➜ Log Analytics **Workspace ID**, as well as our **Primary Key**
 - And then it'll also define the Endpoint that Ingests the Logs.
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
@@ -527,12 +525,14 @@ On the VM's tabs we can check that both the **Log Analytics Agents were Successf
 > The next thing we're going to do, before we finish this lab up, is Query the LAW for our VM Logs as well as our NSG Logs.
 > 
 > We can't move on to the next Lab until we actually start seeing those Logs showing up in there.
+>
+> So let's just start doing that and hopefully they start showing up.
 
 <br>
 
 Back to the **Azure Portal** and to our **Log analytics Workspace** ➜ on the left we'll click on the **"Logs"** blade.
 
-💡 This is where we can start Querying the Logs:
+💡 This is where we can start **Querying the Logs**:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
@@ -540,21 +540,21 @@ Back to the **Azure Portal** and to our **Log analytics Workspace** ➜ on the l
 >   
 > **<summary> 📝 Explanation</summary>**
 > 
-> Basically this is where we can practice KQL (Kusto Query Language) ➜ it's kinf of similar to SQL (Structured Query Language).
+> Basically this is where we can practice **KQL** (Kusto Query Language) ➜ which is similar to **SQL** (Structured Query Language).
 > 
-> Azure will create what's called a Table.
+> Azure will create what's called a **Table**.
 > 
-> You can think of a Table as something similar to an Excel Spreadsheet, but in this case it's like a Database to store our.Logs.
+> You can think of a **Table** as something similar to an Excel Spreadsheet, but in this case it's like a Database to Store our Logs.
 > 
 >   </details>
 
 <br>
 
-To make sure the Logs are coming in from all 3 sources, we'll Query the different **"Tables"**.
+To make sure the Logs are coming in from all 3 sources, we'll Query the different **Tables**.
 
-1. The Table that is used to store the Linux Logs is called Syslog
+1. The Table that is used to store the **Linux Logs** is called **Syslog**.
 
-We should be able to type ```Syslog``` and clcik the ▶️ **"Run"** Button to Query the Syslog Log:
+We should be able to type ```Syslog``` ➜ and click the ▶️ **"Run"** Button to Query the Syslog Log:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
@@ -566,64 +566,13 @@ We should be able to type ```Syslog``` and clcik the ▶️ **"Run"** Button to 
 
 <br>
 
+2. The Table (aka the Excel Spreadsheet) that is used to hold the Logs from our Windows VMs is called **SecurityEvent**
 
-2. The Table (aka Excel Spreadsheet) that is used to hold the Logs from our Windows VMs is called SecurityEvent
-
-
-3. 
-
-
-> Basically we're going to log into our Windows Vm and then install the ***Windows Agent (64 bit)***.
-> 
-> We'll then use the **Workspace ID** & **Primary Key** to force the Agent to point back to our Log Analytics Workspace and Forward the Logs to it.
-> 
->   </details>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-
-
-
-
-
-
-To do that we're going to click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
+So next we're going to inspect the ```SecurityEvent``` Logs:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its **Public IP Address**:
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-- Then if you're on Windows ➜ open Powershell
-
-- But if you're on Mac ➜ open Terminal
-
-And now we'll **SSH into our Linux VM** ➜ so type ```ssh USERNAME@LINUX-VM IP ADDRESS```
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-It'll ask for the **Password** so just type it in (```Cyberlab123!```):
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-You'll know you're logged in when your prompt changes to something like this ```labuser@linux-vm```:
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+✅ We can see the SecurityEvent Logs are coming in ➜ which is great!
 
 <br>
 
@@ -631,38 +580,13 @@ You'll know you're logged in when your prompt changes to something like this ```
 
 <br>
 
-Now to Install the Log Analytics Agent on the Linux VM  ➜ we'll go back to the **"Agents"** blade in our **LAW**
+3. The last Table is used to hold the NSG Logs ➜ **AzureNetworkAnalytics_CL**
 
-Copy the Command Line under ***"Download and onboard agent for Linux"***:
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-Go back to the **Terminal App** ➜ **Paste the Command** ➜ and **Run It** (Press Enter):
-
-This will:
-- Download the Script-
-- Execute the Script-
-- Pass the Parameters which is our
-  - Log Analytics Workspace ID
-  - as well as our Primary Key
-- And then it'll also define the Endpoint that Ingests the Logs.
+Again ➜ inside the LAW's **"Logs"** Blade ➜ Paste the command ```AzureNetworkAnalytics_CL``` and Run the Query:
 
 ![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
 
-It should now install the **Log Analytics Agent** locally with a ```status code 0``` at the end:
-
-We can then just ```exit``` the SSH connection to our **Linux VM**:
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-Now we'll go back to the **Azure Portal** ➜ inside of our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade again.
-
-On the VM's tabs we can check that both the **Log Analytics Agents were Successfully Installed** ✔️
-
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
-
-
-✅ We should be able to start **Querying the Logs** directly inside of **Log Analytics Workspace**.
+✅ And we can see that the NSG Logs did come in.
 
 <br>
 
