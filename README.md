@@ -604,27 +604,25 @@ Again ➜ inside the LAW's **"Logs"** Blade ➜ Paste the command ```AzureNetwor
 
 <br>
 
-That wraps things up for this lab.
+Just to recap, in this lab we:
 
-We just enabled **Microsoft Defender for Cloud**, which can show us our Security Posture and gives us Insights into a lot of things.
+1. Created an **Azure Storage Account** for the Network Security Groups’ Flow Logs.
 
-Primarily it will allow us to take **Logs from our Virtual Machines** and **Forward them into our Log Analyitcs Workspace**.
+2. Enabled **NSG Flow Logs**.
 
-We also enabled Defender for Cloud for Storage Account & Key Vault which we will Set Up and Use in future labs.
+3. Created **Data Collection Rules** to specify which Logs to collect from our Windows and Linux VMs.
+
+4. Manually installed the **Log Analytics Agent** locally on the Virtual Machines.
+
+5. **ueried the Log Analytics Workspace** for our VMs Logs and for our NSGs Logs ➜ to see if they were showing up there.
 
 <br>
 
->   <details close> 
->   
-> **<summary> 💡 Preview</summary>**
-> 
-> In the next lab we'll continue onboarding our **Virtual Machines & Network Security Groups**.
->   
-> Then we're going to **Manually Install the Agent** on them to forward the Logs into our Log Analytics Workspace.
-> 
-> And then hopefully we'll be able to start actually **Querying the Logs Centrally**.
-> 
->   </details>
+After completing this lab, we are now successfully sending Logs from both the VMs and the NSGs into the Log Analytics Workspace.
+
+This is why we can Query things like Syslog and see all the Linux VM Logs.
+
+In subsequent labs we’ll do the same thing for our other resources as well as for our **Microsoft Entra ID Logs**.
 
 
 <br />
