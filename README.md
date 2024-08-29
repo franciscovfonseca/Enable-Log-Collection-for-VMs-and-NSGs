@@ -10,7 +10,7 @@
 
 <br />
 
-In this lab we're going to finish the configuration to allow our Logs from the Virtual Machines to be sent into our Log Analytics Workspace., along with the actual Network Security groups.
+In this lab we're going to finish the configuration to allow our Logs from the Virtual Machines to be sent into our Log Analytics Workspace, along with the actual Network Security Groups.
 
 After we make the necessary configurations, we'll Query our LAW for the Linux Logs, the Windows Logs as well as the NSG Logs.
 
