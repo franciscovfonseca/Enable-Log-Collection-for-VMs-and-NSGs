@@ -48,7 +48,7 @@ This way we'll make sure that all of our Logs are coming into our Central Reposi
 
 We will go to our **Azure Portal** ➜ search for **Storage Account** ➜ and click **"Create storage account"**
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/5efd94ea-5bb1-440e-af0a-cb50d46a19ed)
 
 You can set it up with this details (or similar if applicable):
 - **Resource group**: ```RG-Cyber-Lab```
@@ -58,7 +58,7 @@ You can set it up with this details (or similar if applicable):
 
 Click **"Create"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/5e290340-27f6-43d2-bf13-afba7cefeeaf)
 
 💡 Again, this will be used to store what's called the **"NSG Flow Logs"** ➜ there're essentially Logs from the Firewalls.
 
@@ -82,23 +82,23 @@ We'll just go to **"Network security groups"** in the **Azure Portal**.
 
 And then we'll first click on the **"windows-vm-nsg"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/f18036aa-2c1c-450d-8f6e-41ff6d1e7c26)
 
 Click on the **"NSG flow logs"** blade ➜ and then the **"Create flow log"** button:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/796cb1b1-b16b-46c8-9aca-75487bd045bc)
 
 We can actually create the Flow Log Settings for both of the NSGs' Flow Logs at the same time.
 
 To do so, we'll click on ➕ **Select resource** ➜ and after we'll select ☑️ both the **windows-vm-nsg** and the **linux-vm-nsg**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/9d3c3760-6414-4ba6-b16f-6812647fb6be)
 
 - We'll select the Storage Acount ```sacyberlab999``` we just created
 
 - And we'll set the Retention to **"0 days"** ➜ meaning the data will be retained indefinitely:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/b2194b97-aef5-49ad-b9bc-47decc77fdaf)
 
 For the **Analytics** tab:
 - **Flow Logs Version**: ```⦿ Version 2```
@@ -123,7 +123,7 @@ For the **Analytics** tab:
 
 Then you can click **"Review + create"** to create our Flow Logs:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/05dddcb8-7266-4ef6-8add-372c928a8a2b)
 
   </details>
 
@@ -157,11 +157,11 @@ To **Configure Data Collection Rules (DCR)** we can go to our Log Analytics Work
 
 We'll click on the **"Agents"** blade ➜ and the on the **"Data Collection Rules"** Button:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/1a684f65-750d-458a-981d-7f5d7bee42f1)
 
 Then click on ➕ **Create** to create a new DCR:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/e13bb6ac-9ece-4108-bdcc-0fd7d3386a00)
 
 We'll create it with the following details:
 - **Rule Name**: ```dcr-all-vms``` ➜ 💡 this stands for 1 single DCR that will apply to all of our VMs
@@ -171,15 +171,15 @@ We'll create it with the following details:
 
 Then click "Next" to reach the **Resources** tab:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/010af302-782a-4c56-9a0f-80ca5574ded1)
 
 For the Resources we're going to ➕ **Add Resources**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/45dfe720-c3fc-491a-9bef-7eaf3997f227)
 
 Now expand the **> RG-Cyber Lab** Resource Group ➜ and select ☑️ for both of our VMs ➜ click **"Apply"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/dbf4b74a-94ae-4b99-8692-9566f2952cc0)
 
 Click **"Next: Collect and deliver >"**
 
@@ -187,9 +187,11 @@ Click **"Next: Collect and deliver >"**
 
 So we'll click on the ➕ **Add data source** button:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/a302a685-643c-468d-9d47-44042b329685)
 
 We'll do the **"Linux Syslog"** first.
+
+![azure portal](https://github.com/user-attachments/assets/29944fe1-85ea-4c4a-b1bf-2b50e6325277)
 
 In this Lab, the only Logs we're going to Collect from the Linux VM are the ```LOG_AUTH``` Logs.
 
@@ -211,13 +213,13 @@ And then we'll select ```LOG_DEBUG``` for the rest of the Log Types.
 
 After setting that up, click on the **"Next : Destination"** button:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/9c54a7ba-a867-468b-b987-7ba980c2c851)
 
 For **Destination** ➜ make sure you're sending the data to your actual **LAW**, not the random one that was created! ⚠️
 
 Click **"Add data source"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/07a7a358-78fa-4e5a-b6da-aa19b4b18e6b)
 
 Now click on the ➕ **Add data source** button again:
 
@@ -239,17 +241,17 @@ And also select the ☑️ **Audit Success** & ☑️ **Audit Failure** Logs fro
 
 This is all we need for the Windows Event Logs, so then we'll click on **"Next : Destination"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/a178e78d-c2ad-49f2-897d-b32724a8bcfd)
 
 Again ➜ for **Destination** ➜ we need to make sure we put our actual LAW ```LAW-Cyber-Lab-01```.
 
 Then Add the data source:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/294f285c-d6a4-4365-b131-c1631a60fcb8)
 
 We can now **"Review + create"** to Create the Data Collection Rule:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/1c17ac54-9730-4642-bafd-dbae067b348f)
 
   </details>
 
