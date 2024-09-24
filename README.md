@@ -12,7 +12,7 @@
 
 In this lab we're going to finish the configuration to allow our Logs from the Virtual Machines to be sent into our Log Analytics Workspace, along with the actual Network Security Groups.
 
-After we make the necessary configurations, we'll Query our LAW for the Linux Logs, the Windows Logs as well as the NSG Logs.
+After we make the necessary configurations, we'll **Query our LAW (using KQL)** for the Linux Logs, the Windows Logs as well as the NSG Logs.
 
 This way we'll make sure that all of our Logs are coming into our Central Repository.
 
@@ -277,15 +277,15 @@ We can now **"Review + create"** to Create the Data Collection Rule:
 
 We'll go back to our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade ➜ and then on the **"Data Collection Rules"** Button:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/052dde4c-bd0c-4495-a75f-499981469cb0)
 
 Click on the Data Collection Rule that we just created ➜ ```dcr-all-vms```
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/990345e8-e780-46f5-bfa1-f885f7fccc8f)
 
 Then we'll go to the **"Data Sources"** blade ➜ and click on the **"Windows Event Logs"** Data Source:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/a07b10c1-bb68-455a-9b70-ccf1870af142)
 
 This time instead of **"Basic"** we'll go to **"Custom"**.
 
@@ -305,7 +305,7 @@ This time instead of **"Basic"** we'll go to **"Custom"**.
 
 <br>
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/060a1a2d-865a-48e7-b6f0-344431c85332)
 
 We want to configure our **Data Collection Rule** so that:
 
@@ -320,7 +320,7 @@ Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116 or EventID
 
 And now add it to the **Add Data Source Section**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/83506e71-c0e7-4e06-a98b-276e4cb58c89)
 
 2. Also if the Firewall is disabled or messed with ➜ we want the Firewall Logs to be forwarded to our Log Analytics Workspace as well:
 
@@ -333,7 +333,7 @@ Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*[System[(Eve
 
 Again, we'll add it to the **Add Data Source Section**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/f23a39c8-5c61-4394-83fc-262ad6a15dd3)
 
 Click **"Save"** and we've successfully configured our Data Collection Rule with "Special Forwarding" ✅
 
@@ -367,7 +367,7 @@ Back to our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade
 
 We're first going to Install the Agent on the ```windows-vm``` ➜ so under the **"`Windows servers"** tab ➜ expand the **"Log Analytics agent instructions"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/51c87b0a-aad5-4daa-aa85-103770ba116d)
 
 >   <details close> 
 >   
@@ -383,45 +383,45 @@ We're first going to Install the Agent on the ```windows-vm``` ➜ so under the 
 
 So let's Connect to the **Windows Vm** ➜ open **Microsoft Remote Desktop** ➜ and then connect with the VM's Public IP Address (which we've done many times before in previous labs):
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/19dcdcc3-563e-4d32-9624-052fc3934d89)
 
 Use your credentials:
 - **Username**: ```labuser```
 - **Password**: ```Cyberlab123!```
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/3f316622-9025-4bf9-aa00-50dc05018c6b)
 
 Once connected to the Windows Vm ➜ go back to the Azure Portal on your Computer and copy the "Download link" to **Install the Agent on the Windows VM**.
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/55410b99-a755-442d-9c1a-b179dfcc8959)
 
 Now in the Windows Vm ➜ open up **"Edge"** ➜ Paste the Link & Download the Agent:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/737fce37-39b2-4612-bdde-088b625550cb)
 
 You can Open the File ➜ and click **"Next"** until you reach the section where you want to select:
 
 ```☑️ Connect the agent to Azure Log Analytics (OMS)```
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/cfb6d974-420d-47b1-a745-d4c489bd29e3)
 
 In the next section ➜ Paste the **Workspace ID** & **Workspace Key** you Copied from the Azure Portal back in your Computer:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/06e2ef7a-f4aa-48e1-88d3-57c9ac7aa934)
 
 ⚠️ Make sure **"Azure Cloud"** is set to ```Azure Commercial```
 
 Click **"Next and then **"Install"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/f8681207-f4a9-4025-ac69-510569c744b8)
 
 Once the Agent has finished Installing ➜ still inside the **Windows VM** ➜ open **Control Panel**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/53416129-0420-4b7f-b4bf-9228168ff48c)
 
 Click on **"Large Icons"** ➜ and then **"Microsoft Monitoring Agent"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/0c0d97be-868d-4c8f-9a23-6518764288c4)
 
 Then if we go to the **"Azure Log Analytics (OMS)"** tab ➜ and we should see:
 
@@ -429,7 +429,7 @@ Then if we go to the **"Azure Log Analytics (OMS)"** tab ➜ and we should see:
 
 - The status: ```✅ The Microsoft Monitoring Agent has successfully connected to the Microsoft Operations Management Suite service.```
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/e9fafa49-dcd1-43dc-b1dd-6f46cc02d672)
 
 This signifies that the Connection is Successfull and so it should be Forwarding Logs into our LAW.
 
@@ -453,9 +453,9 @@ This signifies that the Connection is Successfull and so it should be Forwarding
 
 Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its **Public IP Address**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/110a23e4-4b37-4baa-9a62-b40fbd698931)
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/e44a1421-0558-4b83-8321-ef8b249f0ced)
 
 - Then if you're on **Windows** ➜ open **Powershell**
 
@@ -463,15 +463,15 @@ Still in the **Azure Portal** ➜ we'll go to our **linux-vm**  ➜ and copy its
 
 And now we'll **SSH into our Linux VM** ➜ so type ```ssh USERNAME@LINUX-VM IP ADDRESS```
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/1c548eab-261b-4307-bf38-b1bf020f247d)
 
 It'll ask for the **Password** so just type it in (```Cyberlab123!```):
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/9964c04e-50b7-483b-b82f-f92274a3e85b)
 
 You'll know you're **logged in** when your prompt changes to something like this ```labuser@linux-vm```:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/667e9cdf-2ee1-455f-8fc4-d04ec5a46e98)
 
 <br>
 
@@ -483,11 +483,11 @@ Now to Install the Log Analytics Agent on the Linux VM  ➜ we'll go back to the
 
 Click on the **"Linux Server"** tab ➜ and expand the **"Log Analytics agent instructions"**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/81a652c9-2c1c-493f-8dd8-89b151af2ad1)
 
 Copy the Command Line under ***"Download and onboard agent for Linux"***:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/8897b4c9-c21a-4f78-b44a-5751c3933180)
 
 Go back to the **Terminal App** ➜ **Paste the Command** ➜ and **Run It** (Press Enter):
 
@@ -497,19 +497,19 @@ This will:
 - Pass the Parameters, which is our ➜ Log Analytics **Workspace ID**, as well as our **Primary Key**
 - And then it'll also define the Endpoint that Ingests the Logs.
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/0fdb4693-ca42-4b20-b989-d973e3aba495)
 
 It should now install the **Log Analytics Agent** locally with a ```status code 0``` at the end:
 
 We can then just ```exit``` the SSH connection to our **Linux VM**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/699f0f56-8962-4e2e-b413-24c1e7dc8735)
 
 Now we'll go back to the **Azure Portal** ➜ inside of our **Log Analytics Wokspace** ➜ click on the **"Agents"** blade again.
 
 On the VM's tabs we can check that both the **Log Analytics Agents were Successfully Installed** ✔️
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/964d12e6-b19e-4311-a86b-90d758788d43)
 
 
 ✅ We should be able to start **Querying the Logs** directly inside of **Log Analytics Workspace**.
@@ -536,7 +536,7 @@ Back to the **Azure Portal** and to our **Log analytics Workspace** ➜ on the l
 
 💡 This is where we can start **Querying the Logs**:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/ba557976-60b7-4299-9113-cd628e562950)
 
 >   <details close> 
 >   
@@ -558,7 +558,7 @@ To make sure the Logs are coming in from all 3 sources, we'll Query the differen
 
 We should be able to type ```Syslog``` ➜ and click the ▶️ **"Run"** Button to Query the Syslog Log:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/cbb34900-5811-4498-b23d-a75178bb0a11)
 
 ✅ Looks like the **Linux VM Logs** are actually coming in ➜ so we know it's working.
 
@@ -572,7 +572,7 @@ We should be able to type ```Syslog``` ➜ and click the ▶️ **"Run"** Button
 
 So next we're going to inspect the ```SecurityEvent``` Logs:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/9b4f4b61-932e-4beb-86e3-cb002925badc)
 
 ✅ We can see the SecurityEvent Logs are coming in ➜ which is great!
 
@@ -586,7 +586,7 @@ So next we're going to inspect the ```SecurityEvent``` Logs:
 
 Again ➜ inside the LAW's **"Logs"** Blade ➜ Paste the command ```AzureNetworkAnalytics_CL``` and Run the Query:
 
-![azure portal](https://github.com/user-attachments/assets/42c1fe46-b2c3-4330-8a86-bd32748cb890)
+![azure portal](https://github.com/user-attachments/assets/b8bf7908-0bf0-484e-b2ca-47aa5b9731de)
 
 ✅ And we can see that the NSG Logs did come in.
 
